@@ -1,0 +1,19 @@
+{
+  "title": "Basic Addition",
+  "description": "Match addition problems with their correct answers.",
+  "hasDashboard": false,
+  "gameConfig": {
+    "gridSize": "small",
+    "allowHints": false
+  },
+  "questions": [
+    { "pair": ["2 + 3", "5"] },
+    { "pair": ["4 + 6", "10"] },
+    { "pair": ["7 + 8", "15"] },
+    { "pair": ["9 + 4", "13"] },
+    { "pair": ["5 + 7", "12"] },
+    { "pair": ["3 + 9", "12"] },
+    { "pair": ["6 + 5", "11"] },
+    { "pair": ["8 + 7", "15"] }
+  ]
+}

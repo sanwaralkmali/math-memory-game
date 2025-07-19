@@ -1,0 +1,10 @@
+{
+  "title": "Convert Decimals to Fractions",
+  "description": "Practice converting between decimals and fractions by matching equivalent values.",
+  "hasDashboard": true,
+  "gameConfig": {
+    "gridSize": "medium",
+    "timeLimit": 300,
+    "allowHints": true
+  }
+}
