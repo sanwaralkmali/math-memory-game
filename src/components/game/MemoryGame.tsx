@@ -1,10 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { GameCard } from './GameCard';
 import { useMemoryGame, useBattleMemoryGame } from '@/hooks/useMemoryGame';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { GamePair, BattleGameState, GameState } from '@/types/game';
-import { RotateCcw, Trophy, Clock, Target, User } from 'lucide-react';
+import { RotateCcw, Trophy, User } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 interface MemoryGameProps {
@@ -27,6 +28,12 @@ export function MemoryGame({ questions, skillTitle, mode = 'single', playerNames
   const gameApi = isBattle ? battleApi : singleApi;
   const { gameState, initializeGame, selectCard, restartGame } = gameApi;
 
+  // Dialog state for game over
+  const [showGameOver, setShowGameOver] = useState(false);
+  useEffect(() => {
+    if (gameState.isComplete) setShowGameOver(true);
+  }, [gameState.isComplete]);
+
   useEffect(() => {
     initializeGame();
     // eslint-disable-next-line
@@ -38,7 +45,6 @@ export function MemoryGame({ questions, skillTitle, mode = 'single', playerNames
     }
   }, [gameState.isComplete, onComplete]);
 
-  // Always use 4 columns for the game board
   const gridCols = 'grid-cols-4';
 
   const formatTime = (seconds: number) => {
@@ -66,17 +72,14 @@ export function MemoryGame({ questions, skillTitle, mode = 'single', playerNames
                 <span className="text-lg font-bold">{player.score}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Target className="w-4 h-4 text-primary" />
                 <span className="text-sm text-muted-foreground">Moves</span>
                 <span className="text-lg font-bold">{player.moves}</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="w-4 h-4 text-secondary" />
                 <span className="text-sm text-muted-foreground">Time</span>
                 <span className="text-lg font-bold">{formatTime(player.timeElapsed)}</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-accent" />
                 <span className="text-sm text-muted-foreground">Matches</span>
                 <span className="text-lg font-bold">{player.matches}</span>
               </div>
@@ -101,7 +104,6 @@ export function MemoryGame({ questions, skillTitle, mode = 'single', playerNames
       </Card>
       <Card>
         <CardContent className="flex items-center gap-3 p-4">
-          <Target className="w-5 h-5 text-primary" />
           <div>
             <div className="text-sm text-muted-foreground">Moves</div>
             <div className="text-xl font-bold">{singleState.moves}</div>
@@ -110,7 +112,6 @@ export function MemoryGame({ questions, skillTitle, mode = 'single', playerNames
       </Card>
       <Card>
         <CardContent className="flex items-center gap-3 p-4">
-          <Clock className="w-5 h-5 text-secondary" />
           <div>
             <div className="text-sm text-muted-foreground">Time</div>
             <div className="text-xl font-bold">{formatTime(singleState.timeElapsed)}</div>
@@ -119,14 +120,70 @@ export function MemoryGame({ questions, skillTitle, mode = 'single', playerNames
       </Card>
       <Card>
         <CardContent className="flex items-center gap-3 p-4">
-          <div className="w-5 h-5 rounded-full bg-accent" />
-          <div>
-            <div className="text-sm text-muted-foreground">Matches</div>
-            <div className="text-xl font-bold">{singleState.cards.filter(card => card.isMatched).length / 2}/{questions.length}</div>
-          </div>
+          <div className="text-sm text-muted-foreground">Matches</div>
+          <div className="text-xl font-bold">{singleState.cards.filter(card => card.isMatched).length / 2}/{questions.length}</div>
         </CardContent>
       </Card>
     </div>
+  );
+
+  // Winner animation for dialog
+  const Winner = ({ name }: { name: string }) => (
+    <span className="inline-block animate-bounce-in text-3xl md:text-5xl font-extrabold text-primary drop-shadow-lg">{name}</span>
+  );
+
+  // Game over dialog content
+  const renderGameOverDialog = () => (
+    <Dialog open={showGameOver} onOpenChange={setShowGameOver}>
+      <DialogContent className="max-w-md text-center center">
+        <DialogHeader>
+          <DialogTitle className="flex flex-col items-center gap-2">
+            <Trophy className="w-10 h-10 text-yellow-400 animate-bounce" />
+            Game Over!
+          </DialogTitle>
+          <DialogDescription className="text-lg mt-2 flex flex-col items-center ">
+            {isBattle && isBattleState(gameState) ? (
+              <>
+                <div className="mb-2">Winner:</div>
+                <Winner name={
+                  gameState.players[0].score === gameState.players[1].score
+                    ? 'Tie'
+                    : gameState.players[0].score > gameState.players[1].score
+                      ? gameState.players[0].name
+                      : gameState.players[1].name
+                } />
+                <div className="mt-4 text-base">
+                  {gameState.players[0].name}: {gameState.players[0].score} pts<br />
+                  {gameState.players[1].name}: {gameState.players[1].score} pts
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="mb-2">Congratulations!</div>
+                <Winner name="You Win!" />
+                <div className="mt-4 text-base">
+                  {isBattleState(gameState) ? null : (
+                    <>
+                      Moves: {gameState.moves}<br />
+                      Time: {formatTime(gameState.timeElapsed)}<br />
+                      Score: {gameState.score}
+                    </>
+                  )}
+                </div>
+              </>
+            )}
+          </DialogDescription>
+        </DialogHeader>
+        <Button 
+          onClick={() => { setShowGameOver(false); restartGame(); }}
+          variant="secondary"
+          className="gap-2 mt-4 w-full"
+        >
+          <RotateCcw className="w-4 h-4" />
+          Play Again
+        </Button>
+      </DialogContent>
+    </Dialog>
   );
 
   return (
@@ -166,67 +223,8 @@ export function MemoryGame({ questions, skillTitle, mode = 'single', playerNames
           </CardContent>
         </Card>
 
-        {/* Game Complete */}
-        {gameState.isComplete && (
-          <Card className="border-success bg-gradient-success text-success-foreground animate-bounce-in">
-            <CardHeader>
-              <CardTitle className="text-center flex items-center justify-center gap-2">
-                <Trophy className="w-6 h-6" />
-                {isBattle && isBattleState(gameState) ? 'Game Over!' : 'Congratulations!'}
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="text-center">
-              {isBattle && isBattleState(gameState) ? (
-                <>
-                  <p className="mb-4">
-                    Winner: {gameState.players[0].score === gameState.players[1].score
-                      ? 'Tie'
-                      : gameState.players[0].score > gameState.players[1].score
-                        ? gameState.players[0].name
-                        : gameState.players[1].name}
-                  </p>
-                  <p className="text-sm opacity-90 mb-6">
-                    {gameState.players[0].name}: {gameState.players[0].score} pts, {gameState.players[1].name}: {gameState.players[1].score} pts
-                  </p>
-                </>
-              ) : (
-                // Only show this if gameState is GameState (not BattleGameState)
-                isBattleState(gameState) ? null : (
-                  <>
-                    <p className="mb-4">
-                      You completed the game in {gameState.moves} moves and {formatTime(gameState.timeElapsed)}!
-                    </p>
-                    <p className="text-sm opacity-90 mb-6">
-                      Final Score: {gameState.score} points
-                    </p>
-                  </>
-                )
-              )}
-              <Button 
-                onClick={restartGame}
-                variant="secondary"
-                className="gap-2"
-              >
-                <RotateCcw className="w-4 h-4" />
-                Play Again
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-
-        {/* Controls */}
-        {!gameState.isComplete && (
-          <div className="text-center">
-            <Button 
-              onClick={restartGame}
-              variant="outline"
-              className="gap-2"
-            >
-              <RotateCcw className="w-4 h-4" />
-              Restart Game
-            </Button>
-          </div>
-        )}
+        {/* Game Over Dialog */}
+        {renderGameOverDialog()}
       </div>
     </div>
   );

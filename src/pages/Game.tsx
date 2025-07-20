@@ -163,29 +163,48 @@ export default function Game() {
   }
 
   return (
-    <div className="relative">
-      {skillData.hasDashboard && (
-        <div className="absolute top-4 left-4 z-10">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleBackToDashboard}
-            className="gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Dashboard
-          </Button>
+    <div className="min-h-screen bg-gradient-game-bg flex flex-col">
+      <div className="relative flex-1">
+        {skillData.hasDashboard && (
+          <div className="absolute top-4 left-4 z-10">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleBackToDashboard}
+              className="gap-2"
+            >
+              <ArrowLeft className="w-4 h-4" />
+              Back to Dashboard
+            </Button>
+          </div>
+        )}
+        <MemoryGame
+          questions={getQuestionsForMode()}
+          skillTitle={gameTypeTitles[gameType] || skillData.title}
+          mode={mode}
+          playerNames={playerNames}
+          onComplete={() => {
+            // Could add completion tracking or navigation here
+          }}
+        />
+      </div>
+
+      {/* Footer */}
+      <footer className="w-full py-4 text-center text-sm text-muted-foreground border-t">
+        <div className="container mx-auto">
+          <p>
+            Educational Game 2025 | Created for Educational purposes By{" "}
+            <a 
+              href="https://sanwaralkmali.github.io/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              Salah Alkmali
+            </a>
+          </p>
         </div>
-      )}
-      <MemoryGame
-        questions={getQuestionsForMode()}
-        skillTitle={gameTypeTitles[gameType] || skillData.title}
-        mode={mode}
-        playerNames={playerNames}
-        onComplete={() => {
-          // Could add completion tracking or navigation here
-        }}
-      />
+      </footer>
     </div>
   );
 }

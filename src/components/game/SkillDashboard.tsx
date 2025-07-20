@@ -120,13 +120,10 @@ export function SkillDashboard({ onStartGame }: SkillDashboardProps) {
               <DialogContent className="max-w-md font-cairo">
                 <DialogHeader>
                   <DialogTitle className="flex items-center gap-2 text-2xl font-cairo"><Star className="w-6 h-6 text-yellow-400" /> Leaderboard</DialogTitle>
-                  <DialogDescription className="mb-4 font-cairo">Top players (fake data)</DialogDescription>
+                  <DialogDescription className="mb-4 font-cairo">Top players</DialogDescription>
                 </DialogHeader>
                 <div className="space-y-3 mt-2">
-                  <div className="flex items-center gap-3 text-lg font-semibold font-cairo"><UserCircle2 className="w-7 h-7 text-primary" /> <span className="flex-1">Alice</span><span className="text-right">120 pts</span></div>
-                  <div className="flex items-center gap-3 text-lg font-semibold font-cairo"><UserCircle2 className="w-7 h-7 text-secondary" /> <span className="flex-1">Bob</span><span className="text-right">110 pts</span></div>
-                  <div className="flex items-center gap-3 text-lg font-semibold font-cairo"><UserCircle2 className="w-7 h-7 text-muted-foreground" /> <span className="flex-1">Carol</span><span className="text-right">100 pts</span></div>
-                  <div className="flex justify-between text-xs text-muted-foreground mt-2 font-cairo"><span>More coming soon...</span></div>
+                  <div className="flex justify-between text-xs text-muted-foreground mt-2 font-cairo"><span> COMING SOON . . .</span></div>
                 </div>
               </DialogContent>
             </Dialog>

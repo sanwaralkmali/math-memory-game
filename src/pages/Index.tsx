@@ -29,9 +29,9 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-game-bg">
+    <div className="min-h-screen bg-gradient-game-bg flex flex-col">
       {/* Hero Section */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-16 flex-1">
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Zap className="w-4 h-4" />
@@ -145,6 +145,23 @@ const Index = () => {
           </div>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="w-full py-4 text-center text-sm text-muted-foreground border-t">
+        <div className="container mx-auto">
+          <p>
+            Educational Game 2025 | Created for Educational purposes By{" "}
+            <a 
+              href="https://sanwaralkmali.github.io/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-primary hover:underline"
+            >
+              Salah Alkmali
+            </a>
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
