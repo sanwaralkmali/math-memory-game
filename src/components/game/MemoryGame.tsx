@@ -208,7 +208,7 @@ export function MemoryGame({ questions, skillTitle, mode = 'single', playerNames
         <Card className="mb-6">
           <CardContent className="p-6">
             <div className={cn(
-              "grid gap-4 max-w-4xl mx-auto",
+              "grid gap-2 max-w-3xl mx-auto",
               gridCols
             )}>
               {gameState.cards.map((card) => (
