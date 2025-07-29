@@ -20,8 +20,13 @@ export function useMemoryGame(questions: GamePair[]) {
   const initializeGame = useCallback(() => {
     const cards: GameCard[] = [];
     
+    // Create array of available icons (1-15) and shuffle them
+    const availableIcons = Array.from({ length: 15 }, (_, i) => i + 1);
+    const shuffledIcons = availableIcons.sort(() => Math.random() - 0.5);
+    
     questions.forEach((question, index) => {
       const pairId = `pair-${index}`;
+      const iconId = shuffledIcons[index % 15]; // Use modulo to handle more than 15 pairs
       
       // Create two cards for each pair
       cards.push(
@@ -29,6 +34,7 @@ export function useMemoryGame(questions: GamePair[]) {
           id: `${pairId}-a`,
           content: question.pair[0],
           pairId,
+          iconId,
           isFlipped: false,
           isMatched: false,
         },
@@ -36,6 +42,7 @@ export function useMemoryGame(questions: GamePair[]) {
           id: `${pairId}-b`,
           content: question.pair[1],
           pairId,
+          iconId,
           isFlipped: false,
           isMatched: false,
         }
@@ -176,11 +183,18 @@ export function useBattleMemoryGame(questions: GamePair[], playerNames: [string,
   // Initialize game
   const initializeGame = useCallback(() => {
     const cards: GameCard[] = [];
+    
+    // Create array of available icons (1-15) and shuffle them
+    const availableIcons = Array.from({ length: 15 }, (_, i) => i + 1);
+    const shuffledIcons = availableIcons.sort(() => Math.random() - 0.5);
+    
     questions.forEach((question, index) => {
       const pairId = `pair-${index}`;
+      const iconId = shuffledIcons[index % 15]; // Use modulo to handle more than 15 pairs
+      
       cards.push(
-        { id: `${pairId}-a`, content: question.pair[0], pairId, isFlipped: false, isMatched: false },
-        { id: `${pairId}-b`, content: question.pair[1], pairId, isFlipped: false, isMatched: false }
+        { id: `${pairId}-a`, content: question.pair[0], pairId, iconId, isFlipped: false, isMatched: false },
+        { id: `${pairId}-b`, content: question.pair[1], pairId, iconId, isFlipped: false, isMatched: false }
       );
     });
     const shuffledCards = cards.sort(() => Math.random() - 0.5);

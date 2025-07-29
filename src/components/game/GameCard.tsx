@@ -1,6 +1,7 @@
 import { GameCard as GameCardType } from "@/types/game";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
+import { renderMathContent } from "@/utils/latexRenderer";
 
 interface GameCardProps {
   card: GameCardType;
@@ -68,9 +69,18 @@ export function GameCard({ card, onClick, disabled = false }: GameCardProps) {
             "transition-all duration-300"
           )}
         >
-          <span className="break-words max-w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-semibold">
-            {card.content}
-          </span>
+          {/* Icon in top-right corner - only visible when card is flipped */}
+          <div className="absolute top-1 right-1 w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 lg:w-7 lg:h-7 xl:w-8 xl:h-8">
+            <img
+              src={`/game-cards/${card.iconId}.png`}
+              alt={`Icon ${card.iconId}`}
+              className="w-full h-full object-contain opacity-80"
+            />
+          </div>
+
+          <div className="break-words max-w-full text-sm sm:text-base md:text-lg lg:text-xl xl:text-2xl font-semibold flex items-center justify-center">
+            {renderMathContent(card.content)}
+          </div>
         </div>
       </div>
     </div>

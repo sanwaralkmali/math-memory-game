@@ -18,6 +18,7 @@ export interface GameCard {
   id: string;
   content: string;
   pairId: string;
+  iconId: number; // Icon identifier (1-15)
   isFlipped: boolean;
   isMatched: boolean;
 }

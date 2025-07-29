@@ -40,3 +40,55 @@
 .read-the-docs {
   color: #888;
 }
+
+/* LaTeX styling for game cards */
+.game-card-container .katex {
+  font-size: inherit !important;
+  line-height: 1.2 !important;
+}
+
+.game-card-container .katex-display {
+  margin: 0 !important;
+  text-align: center !important;
+}
+
+.game-card-container .katex-html {
+  text-align: center !important;
+}
+
+/* Ensure LaTeX content fits properly in cards */
+.game-card-container .katex .base {
+  margin: 0 !important;
+}
+
+.game-card-container .katex .frac-line {
+  border-bottom-width: 0.04em !important;
+}
+
+.game-card-container .katex .frac-line::after {
+  border-bottom-width: 0.04em !important;
+}
+
+/* Game card icon styling */
+.game-card-container img {
+  pointer-events: none;
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
+.game-card-container .absolute.top-1.right-1 {
+  z-index: 5;
+}
+
+/* Ensure icons don't interfere with card interactions */
+.game-card-container .absolute.top-1.right-1 img {
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+/* Icon hover effect */
+.game-card-container:hover .absolute.top-1.right-1 img {
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
