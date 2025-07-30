@@ -21,6 +21,7 @@ import { GameCard } from "./GameCard";
 import { GameState, BattleGameState, GamePair } from "@/types/game";
 import { useMemoryGame } from "@/hooks/useMemoryGame";
 import { useBattleMemoryGame } from "@/hooks/useMemoryGame";
+import { MATHLOGAMEFooter } from "@/components/ui/MATHLOGAMEFooter";
 
 interface MemoryGameProps {
   questions: GamePair[];
@@ -358,6 +359,9 @@ export function MemoryGame({
         {/* Game Over Dialog */}
         {renderGameOverDialog()}
       </div>
+
+      {/* MATHLOGAME Footer */}
+      <MATHLOGAMEFooter />
     </div>
   );
 }

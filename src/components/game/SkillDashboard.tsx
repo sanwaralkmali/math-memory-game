@@ -22,6 +22,7 @@ import {
   Brain,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { MATHLOGAMEFooter } from "@/components/ui/MATHLOGAMEFooter";
 
 interface SkillDashboardProps {
   onStartGame: (options: {
@@ -317,21 +318,7 @@ export function SkillDashboard({ onStartGame }: SkillDashboardProps) {
       </div>
 
       {/* Footer */}
-      <footer className="w-full py-4 text-center text-sm text-muted-foreground border-t bg-background">
-        <div className="container mx-auto">
-          <p>
-            Educational Game 2025 | Created for Educational purposes By{" "}
-            <Link
-              to="https://sanwaralkmali.github.io/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              Salah Alkmali
-            </Link>
-          </p>
-        </div>
-      </footer>
+      <MATHLOGAMEFooter />
     </div>
   );
 }

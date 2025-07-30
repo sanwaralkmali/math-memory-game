@@ -245,3 +245,15 @@ All colors MUST be HSL.
     gap: 1rem;
   }
 }
+
+/* MATHLOGAME Footer styling */
+.mathlogame-logo {
+  font-family: 'Cairo', Arial, sans-serif !important;
+  font-weight: 700 !important;
+  font-size: 16px !important;
+  background: linear-gradient(135deg, #4BB3FD 0%, #10B981 50%, #4BB3FD 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  display: inline-block !important;
+}
