@@ -6,6 +6,7 @@ export function MATHLOGAMEFooter() {
   return (
     <footer className="w-full py-4 text-center text-sm text-muted-foreground border-t bg-background/80 backdrop-blur-sm font-cairo flex-shrink-0">
       <div className="flex items-center justify-center gap-2">
+        {/* TEST: Hover effect should work on Vercel */}
         <img
           src={isHovered ? "/MATHLOGAME-dark.png" : "/MATHLOGAME-light.png"}
           alt="MATHLOGAME"
