@@ -257,3 +257,16 @@ All colors MUST be HSL.
   background-clip: text !important;
   display: inline-block !important;
 }
+
+/* MATHLOGAME Footer hover effects */
+footer a:hover img {
+  filter: drop-shadow(0 0 8px rgba(75, 179, 253, 0.3));
+  transform: scale(1.05);
+}
+
+footer a:hover .mathlogame-logo {
+  background: linear-gradient(135deg, #10B981 0%, #4BB3FD 50%, #10B981 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
