@@ -1,5 +1,4 @@
 import React from 'react';
-import 'katex/dist/katex.min.css';
 import { InlineMath, BlockMath } from 'react-katex';
 
 export const renderMathContent = (content: string): React.ReactNode => {
